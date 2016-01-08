@@ -51,6 +51,42 @@ public class PictureTester
     swan.explore();
   }
   
+  public static void testNegate(){
+      Picture caterpillar = new Picture("caterpillar.jpg");
+      caterpillar.explore();
+      caterpillar.negate();
+      caterpillar.explore();
+      
+    }
+    
+   public static void testMirrorVerticalRightToLeft(){ 
+       Picture caterpillar = new Picture("caterpillar.jpg");
+      caterpillar.explore();
+      caterpillar.mirrorVerticalRightToLeft();
+      caterpillar.explore();
+    }
+    public static void testHorizontal()
+  {
+    Picture swan = new Picture("swan.jpg");
+    swan.explore();
+    swan.mirrorHorizontal();
+    swan.explore();
+  }
+  public static void testHorizontalBotToTop(){
+      Picture temple = new Picture("temple.jpg");
+    temple.explore();
+    temple.mirrorHorizontalBotToTop();
+    temple.explore();
+    
+    }
+   public static void testMirrorDiagonal()
+  {
+    Picture beach = new Picture("beach.jpg");
+    beach.explore();
+    beach.mirrorDiagonal();
+    beach.explore();
+  }
+    
   /** Main method for testing.  Every class can have a main
     * method in Java */
   public static void main(String[] args)
@@ -58,14 +94,22 @@ public class PictureTester
     // uncomment a call here to run a test
     // and comment out the ones you don't want
     // to run
+    
+    
     testZeroBlue();
+    
+    testNegate();
+    testMirrorVerticalRightToLeft();
+    testHorizontal();
+    testHorizontalBotToTop();
+    testMirrorDiagonal();
     //testKeepOnlyBlue();
     //testKeepOnlyRed();
     //testKeepOnlyGreen();
     //testNegate();
     //testGrayscale();
     //testFixUnderwater();
-    //testMirrorVertical();
+    testMirrorVertical();
     //testMirrorTemple();
     //testMirrorArms();
     //testMirrorGull();
