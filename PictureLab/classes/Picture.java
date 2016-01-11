@@ -128,7 +128,34 @@ public class Picture extends SimplePicture
 
     }
 
-    public void grayscale(){
+    public void grayScale(){
+        Pixel[][] pixels = this.getPixels2D();
+        for (Pixel[] rowArray : pixels)
+        {
+            for (Pixel pixelObj : rowArray)
+            {
+                int red = pixelObj.getRed();
+                int green = pixelObj.getGreen();
+                int blue= pixelObj.getBlue();
+                int color= (red+blue+green)/3;
+                pixelObj.setRed(color);
+                pixelObj.setGreen(color);
+                pixelObj.setBlue(color);
+            }
+        }
+        
+    }
+    
+    public void fixUnderwater(){
+        Pixel[][] pixels = this.getPixels2D();
+        for (Pixel[] rowArray : pixels)
+        {
+            for (Pixel pixelObj : rowArray)
+            {
+                pixelObj.setRed(255);
+            }
+        }
+        
     }
 
     /** Method that mirrors the picture around a 
@@ -254,9 +281,72 @@ public class Picture extends SimplePicture
     }
     
     public void mirrorArms(){
+        int mirrorPoint= 200;
+        Pixel upPixel= null;
+        Pixel downPixel= null;
+        
+        Pixel[][] pixels = this.getPixels2D();
+        
+
+        // loop through the rows
+        for (int row = 158; row < mirrorPoint; row++)
+        {
+            // loop from 13 to just before the mirror point
+            for (int col = 100; col < 170; col++)
+            {
+
+                upPixel= pixels[row][col];      
+                downPixel = pixels[mirrorPoint - row + mirrorPoint]                       
+                [col];
+                downPixel.setColor(upPixel.getColor());
+                
+            }
+        }
+        
+        for (int row = 170; row < mirrorPoint; row++)
+        {
+            // loop from 13 to just before the mirror point
+            for (int col = 230; col < 294; col++)
+            {
+                
+
+                upPixel= pixels[row][col];      
+                downPixel = pixels[mirrorPoint - row + mirrorPoint]                       
+                [col];
+                downPixel.setColor(upPixel.getColor());
+                
+            }
+        }
         
     }
-  
+    
+    public void mirrorGull(){
+        
+        int mirrorPoint= 349;
+        Pixel leftPixel= null;
+        Pixel rightPixel= null;
+        
+        Pixel[][] pixels = this.getPixels2D();
+        
+
+        // loop through the rows
+        for (int row = 217; row < 342; row++)
+        {
+            // loop from 13 to just before the mirror point
+            for (int col = 230; col < mirrorPoint; col++)
+            {
+
+                leftPixel = pixels[row][col];      
+                rightPixel = pixels[row]                       
+                [mirrorPoint - col + mirrorPoint];
+                rightPixel.setColor(leftPixel.getColor());
+                
+            }
+        }
+        
+    }
+    
+    
 
     /** copy from the passed fromPic to the
      * specified startRow and startCol in the
@@ -267,6 +357,29 @@ public class Picture extends SimplePicture
      */
     public void copy(Picture fromPic, 
     int startRow, int startCol)
+    {
+        Pixel fromPixel = null;
+        Pixel toPixel = null;
+        Pixel[][] toPixels = this.getPixels2D();
+        Pixel[][] fromPixels = fromPic.getPixels2D();
+        for (int fromRow = 0, toRow = startRow; 
+        fromRow < fromPixels.length &&
+        toRow < toPixels.length; 
+        fromRow++, toRow++)
+        {
+            for (int fromCol = 0, toCol = startCol; 
+            fromCol < fromPixels[0].length &&
+            toCol < toPixels[0].length;  
+            fromCol++, toCol++)
+            {
+                fromPixel = fromPixels[fromRow][fromCol];
+                toPixel = toPixels[toRow][toCol];
+                toPixel.setColor(fromPixel.getColor());
+            }
+        }   
+    }
+    public void copy(Picture fromPic, 
+    int startRow, int endSourceRow, int startCol,int endSourceCol,int startDestRow, int startDestCol)
     {
         Pixel fromPixel = null;
         Pixel toPixel = null;
