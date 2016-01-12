@@ -103,7 +103,16 @@ public class PictureTester
         snowman.mirrorArms();
         snowman.explore();
     }
-
+    
+     public static void testCropAndCopy()
+    {
+        Picture snowman = new Picture("snowman.jpg");
+        Picture copy= new Picture();
+        snowman.explore();
+        copy.cropAndCopy(snowman, 10, 100, 20, 200, 30,40);
+        copy.explore();
+    }
+    
     public static void testMirrorGull(){
         Picture seagull = new Picture("seagull.jpg");
         seagull.explore();
