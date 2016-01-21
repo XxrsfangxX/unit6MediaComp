@@ -109,7 +109,7 @@ public class PictureTester
         Picture snowman = new Picture("snowman.jpg");
         Picture copy= new Picture();
         snowman.explore();
-        copy.cropAndCopy(snowman, 10, 100, 20, 200, 30,40);
+        copy.cropAndCopy(snowman, 10, 100, 20, 200, 30,100, 0, 100);
         copy.explore();
     }
     
@@ -126,6 +126,14 @@ public class PictureTester
         water.fixUnderwater();
         water.explore();
     }
+    public static void testScaleByHalf(){
+        Picture seagull = new Picture("seagull.jpg");
+        seagull.explore();
+        seagull.scaleByHalf();
+        seagull.explore();
+    }
+    
+    
 
     /** Main method for testing.  Every class can have a main
      * method in Java */

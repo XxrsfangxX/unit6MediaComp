@@ -379,21 +379,21 @@ public class Picture extends SimplePicture
         }   
     }
     public void cropAndCopy(Picture fromPic, 
-    int startRow, int endSourceRow, int startCol,int endSourceCol,int startDestRow, int startDestCol)
+    int startRow, int endSourceRow, int startCol,int endSourceCol,int startDestRow, int endDestRow, int startDestCol, int endDestCol)
     {
         Pixel fromPixel = null;
         Pixel toPixel = null;
         Pixel[][] toPixels = this.getPixels2D();
         Pixel[][] fromPixels = fromPic.getPixels2D();
         
-        for (int fromRow = startDestRow, toRow = startRow; 
-        fromRow < fromPixels.length &&
-        toRow < toPixels.length; 
+        for (int fromRow = startRow, toRow =  startDestRow; 
+        fromRow < endSourceRow &&
+        toRow <  endDestRow; 
         fromRow++, toRow++)
         {
-            for (int fromCol = startDestCol, toCol = startCol; 
-            fromCol < fromPixels[0].length &&
-            toCol < toPixels[0].length;  
+            for (int fromCol = startCol , toCol =  startDestCol; 
+            fromCol < endSourceCol &&
+            toCol < endDestCol;  
             fromCol++, toCol++)
             {
                 fromPixel = fromPixels[fromRow][fromCol];
@@ -405,6 +405,8 @@ public class Picture extends SimplePicture
     
     public void scaleByHalf(){
         Pixel[][] pixels = this.getPixels2D();
+        Pixel fromPixel = null;
+        Pixel toPixel = null;
         int length= pixels.length;
         int rowCount=0;
         int colCount=0;
@@ -413,9 +415,12 @@ public class Picture extends SimplePicture
         
         for (int row = 0; row < length; row+=2 )
         {
-            
-            for (int col=0; col<length; col+=2){
+            colCount=0;
+            for (int col=0; col<pixels[row].length; col+=2){
                 
+                fromPixel =pixels[row][col];
+                toPixel= pixels[rowCount][colCount];
+                toPixel.setColor(fromPixel.getColor());
                 colCount++;
             }
             rowCount++;
@@ -424,9 +429,38 @@ public class Picture extends SimplePicture
             }
            
         
+
+    }
+    public void scale(double factor){
+        Pixel[][] pixels = this.getPixels2D();
+        Pixel fromPixel = null;
+        Pixel toPixel = null;
+        int length= pixels.length;
+        int rowCount=0;
+        int colCount=0;
+        double size= factor;
+        int multiplier=1;
+        while ((size*multiplier)%100!=0){
+            multiplier+=1;
+        }
+        size= size*multiplier;
+
         
         
-    
+        
+        for (int row = 0; row < length; row+=2 )
+        {
+            colCount=0;
+            for (int col=0; col<pixels[row].length; col+=2){
+                
+                fromPixel =pixels[row][col];
+                toPixel= pixels[rowCount][colCount];
+                toPixel.setColor(fromPixel.getColor());
+                colCount++;
+            }
+            rowCount++;
+            }
+        
     }
 
     /** Method to create a collage of several pictures */
